@@ -1,0 +1,25 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+tab_width = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 120
+continuation_indent_size = 4
+
+[*.groovy]
+ij_groovy_class_count_to_use_import_on_demand = 999
+ij_groovy_imports_layout = $*,|,*
+ij_groovy_layout_static_imports_separately = true
+ij_groovy_names_count_to_use_import_on_demand = 999
+ij_groovy_use_single_class_imports = true
+
+[*.md]
+max_line_length = off

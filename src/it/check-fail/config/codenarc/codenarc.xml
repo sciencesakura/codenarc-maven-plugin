@@ -1,0 +1,6 @@
+<ruleset xmlns="http://codenarc.org/ruleset/1.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://codenarc.org/ruleset/1.0 https://raw.githubusercontent.com/CodeNarc/CodeNarc/v3.7.0/src/main/resources/ruleset-schema.xsd">
+  <!-- https://codenarc.org/codenarc-rules-comments.html#classjavadoc-rule -->
+  <rule class='org.codenarc.rule.comments.ClassJavadocRule'/>
+</ruleset>

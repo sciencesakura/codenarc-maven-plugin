@@ -1,0 +1,61 @@
+<ruleset xmlns="http://codenarc.org/ruleset/1.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://codenarc.org/ruleset/1.0 https://raw.githubusercontent.com/CodeNarc/CodeNarc/v3.7.0/src/main/resources/ruleset-schema.xsd">
+
+  <ruleset-ref path="rulesets/basic.xml"/>
+
+  <ruleset-ref path="rulesets/braces.xml">
+    <exclude name="IfStatementBraces"/>
+  </ruleset-ref>
+
+  <ruleset-ref path="rulesets/comments.xml"/>
+
+  <ruleset-ref path="rulesets/convention.xml">
+    <exclude name="CompileStatic"/>
+    <exclude name="ImplicitClosureParameter"/>
+    <exclude name="ImplicitReturnStatement"/>
+    <exclude name="NoDef"/>
+    <exclude name="StaticMethodsBeforeInstanceMethods"/>
+    <exclude name="VariableTypeRequired"/>
+  </ruleset-ref>
+
+  <ruleset-ref path="rulesets/design.xml">
+    <exclude name="Instanceof"/>
+  </ruleset-ref>
+
+  <ruleset-ref path="rulesets/exceptions.xml"/>
+
+  <ruleset-ref path="rulesets/formatting.xml">
+    <rule-config name="ClassStartsWithBlankLine">
+      <property name="ignoreInnerClasses" value="true"/>
+    </rule-config>
+    <rule-config name="Indentation">
+      <property name="spacesPerIndentLevel" value="2"/>
+    </rule-config>
+    <rule-config name="LineLength">
+      <property name="ignoreLineRegex" value=".*['&quot;]$"/>
+    </rule-config>
+    <exclude name="BlankLineBeforePackage"/>
+    <exclude name="ClassEndsWithBlankLine"/>
+    <exclude name="SpaceAroundMapEntryColon"/>
+  </ruleset-ref>
+
+  <ruleset-ref path="rulesets/generic.xml"/>
+
+  <ruleset-ref path="rulesets/groovyism.xml">
+    <exclude name="GStringExpressionWithinString"/>
+  </ruleset-ref>
+
+  <ruleset-ref path="rulesets/imports.xml"/>
+
+  <ruleset-ref path="rulesets/naming.xml"/>
+
+  <ruleset-ref path="rulesets/unnecessary.xml">
+    <rule-config name="UnnecessaryGetter">
+      <property name="checkIsMethods" value="false"/>
+    </rule-config>
+  </ruleset-ref>
+
+  <ruleset-ref path="rulesets/unused.xml"/>
+
+</ruleset>
