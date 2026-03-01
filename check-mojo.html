@@ -61,10 +61,11 @@
 <p><strong>Full name</strong>:</p>
 <p>com.sciencesakura:codenarc-maven-plugin:1.0.0-SNAPSHOT:check</p>
 <p><strong>Description</strong>:</p>
-<p>Runs CodeNarc analysis on the project's source code and generates a report of any violations found. Call <code>mvn codenarc:check</code> to execute the analysis.</p>
+<p>Runs CodeNarc analysis on the project's source code. Call <code>mvn codenarc:check</code> to execute the analysis.</p>
 <p><strong>Attributes</strong>:</p>
 <ul>
 <li>Requires a Maven project to be executed.</li>
+<li>Requires dependency resolution of artifacts in scope: <code>test</code>.</li>
 <li>The goal is not marked as thread-safe and thus does not support parallel builds.</li>
 <li>Binds by default to the <a class="externalLink" href="https://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <code>verify</code>.</li></ul><section><a id="Required_Parameters"></a>
 <h2>Required Parameters</h2>
@@ -83,12 +84,12 @@
 <td><a href="#ruleset"><code>&lt;ruleset&gt;</code></a></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
-<td>Specifies the location of the CodeNarc ruleset file. If the default file does not exist, it will fall back to using the built-in <code>rulesets/basic.xml</code>.<br /><strong>Default</strong>: <code>${project.basedir}/config/codenarc/codenarc.xml</code><br /><strong>User Property</strong>: <code>codenarc.ruleset</code></td></tr>
+<td>Specifies the location of the CodeNarc ruleset file. If the default file does not exist, the plugin falls back to the built-in <code>rulesets/basic.xml</code> ruleset.<br /><strong>Default</strong>: <code>${project.basedir}/config/codenarc/codenarc.xml</code><br /><strong>User Property</strong>: <code>codenarc.ruleset</code></td></tr>
 <tr class="b">
 <td><a href="#sourceDirectories"><code>&lt;sourceDirectories&gt;</code></a></td>
 <td><code>List&lt;String&gt;</code></td>
 <td><code>-</code></td>
-<td>Specifies the location of the source directories to analyze.<br /><strong>Default</strong>: <code>${project.compileSourceRoots}</code></td></tr></table></section><section><a id="Optional_Parameters"></a>
+<td>Specifies the source directories to analyze.<br /><strong>Default</strong>: <code>${project.compileSourceRoots}</code></td></tr></table></section><section><a id="Optional_Parameters"></a>
 <h2>Optional Parameters</h2>
 <table class="table table-striped">
 <tr class="a">
@@ -125,12 +126,18 @@
 <td><a href="#outputFile"><code>&lt;outputFile&gt;</code></a></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
-<td>Specifies the location of the CodeNarc report file. The report format is determined by the file extension: <code>.html</code> for HTML, <code>.json</code> for JSON, <code>.txt</code> for plain text, and any other extension for XML.<br /><strong>Default</strong>: <code>${project.build.directory}/CodeNarcXmlReport.xml</code><br /><strong>User Property</strong>: <code>codenarc.output.file</code></td></tr>
+<td>Specifies the location of the CodeNarc report file. The report format is determined by the file extension: 
+<ul>
+ <li><code>.html</code> or <code>.htm</code> for HTML</li>
+ <li><code>.json</code> for JSON</li>
+ <li><code>.txt</code> for plain text</li>
+ <li>any other extension for XML</li>
+</ul><br /><strong>Default</strong>: <code>${project.build.directory}/CodeNarcXmlReport.xml</code><br /><strong>User Property</strong>: <code>codenarc.output.file</code></td></tr>
 <tr class="b">
 <td><a href="#testSourceDirectories"><code>&lt;testSourceDirectories&gt;</code></a></td>
 <td><code>List&lt;String&gt;</code></td>
 <td><code>-</code></td>
-<td>Specifies the location of the test source directories to analyze. This is only used if <code>includeTests</code><!-- no javadoc sites associated --> is set to <code>true</code>.<br /><strong>Default</strong>: <code>${project.testCompileSourceRoots}</code></td></tr></table></section><section><a id="Parameter_Details"></a>
+<td>Specifies the test source directories to analyze. Used only when <code>includeTests</code> is set to <code>true</code>.<br /><strong>Default</strong>: <code>${project.testCompileSourceRoots}</code></td></tr></table></section><section><a id="Parameter_Details"></a>
 <h2>Parameter Details</h2><a id="consoleOutput"></a><section><a id="a.3CconsoleOutput.3E"></a>
 <h3>&lt;consoleOutput&gt;</h3>
 <div>Whether to output the analysis results to the console.</div>
@@ -174,27 +181,33 @@
 <li><strong>User Property</strong>: <code>codenarc.includes</code></li>
 <li><strong>Default</strong>: <code>**/*.groovy</code></li></ul><hr /></section><a id="outputFile"></a><section><a id="a.3CoutputFile.3E"></a>
 <h3>&lt;outputFile&gt;</h3>
-<div>Specifies the location of the CodeNarc report file. The report format is determined by the file extension: <code>.html</code> for HTML, <code>.json</code> for JSON, <code>.txt</code> for plain text, and any other extension for XML.</div>
+<div>Specifies the location of the CodeNarc report file. The report format is determined by the file extension: 
+<ul>
+ <li><code>.html</code> or <code>.htm</code> for HTML</li>
+ <li><code>.json</code> for JSON</li>
+ <li><code>.txt</code> for plain text</li>
+ <li>any other extension for XML</li>
+</ul></div>
 <ul>
 <li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>User Property</strong>: <code>codenarc.output.file</code></li>
 <li><strong>Default</strong>: <code>${project.build.directory}/CodeNarcXmlReport.xml</code></li></ul><hr /></section><a id="ruleset"></a><section><a id="a.3Cruleset.3E"></a>
 <h3>&lt;ruleset&gt;</h3>
-<div>Specifies the location of the CodeNarc ruleset file. If the default file does not exist, it will fall back to using the built-in <code>rulesets/basic.xml</code>.</div>
+<div>Specifies the location of the CodeNarc ruleset file. If the default file does not exist, the plugin falls back to the built-in <code>rulesets/basic.xml</code> ruleset.</div>
 <ul>
 <li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>Yes</code></li>
 <li><strong>User Property</strong>: <code>codenarc.ruleset</code></li>
 <li><strong>Default</strong>: <code>${project.basedir}/config/codenarc/codenarc.xml</code></li></ul><hr /></section><a id="sourceDirectories"></a><section><a id="a.3CsourceDirectories.3E"></a>
 <h3>&lt;sourceDirectories&gt;</h3>
-<div>Specifies the location of the source directories to analyze.</div>
+<div>Specifies the source directories to analyze.</div>
 <ul>
 <li><strong>Type</strong>: <code>java.util.List&lt;java.lang.String&gt;</code></li>
 <li><strong>Required</strong>: <code>Yes</code></li>
 <li><strong>Default</strong>: <code>${project.compileSourceRoots}</code></li></ul><hr /></section><a id="testSourceDirectories"></a><section><a id="a.3CtestSourceDirectories.3E"></a>
 <h3>&lt;testSourceDirectories&gt;</h3>
-<div>Specifies the location of the test source directories to analyze. This is only used if <code>includeTests</code><!-- no javadoc sites associated --> is set to <code>true</code>.</div>
+<div>Specifies the test source directories to analyze. Used only when <code>includeTests</code> is set to <code>true</code>.</div>
 <ul>
 <li><strong>Type</strong>: <code>java.util.List&lt;java.lang.String&gt;</code></li>
 <li><strong>Required</strong>: <code>No</code></li>

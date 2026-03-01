@@ -72,7 +72,101 @@
         <main id="bodyColumn" class="span10">
 <section><a id="CodeNarc_Maven_Plugin"></a>
 <h1>CodeNarc Maven Plugin</h1>
-<p>A Maven plugin that integrates <a href="https://codenarc.org/" class="externalLink">CodeNarc</a> into the Maven build process.</p></section>        </main>
+<p><img src="https://github.com/sciencesakura/codenarc-maven-plugin/actions/workflows/build.yaml/badge.svg" alt="" /> <a href="https://maven-badges.sml.io/sonatype-central/com.sciencesakura/codenarc-maven-plugin" class="externalLink"><img src="https://maven-badges.sml.io/sonatype-central/com.sciencesakura/codenarc-maven-plugin/badge.svg" alt="Maven Central" /></a></p>
+<p>A Maven plugin that integrates <a href="https://codenarc.org/" class="externalLink">CodeNarc</a>, a static analysis tool for Groovy.</p><section><a id="Requirements"></a>
+<h2>Requirements</h2>
+<ul>
+
+<li>Java 11+</li>
+<li>Maven 3.6.3+</li>
+</ul></section><section><a id="Installation_and_usage"></a>
+<h2>Installation and usage</h2>
+<p>The CodeNarc Maven Plugin is available on Maven Central. Add the <code>&lt;plugin&gt;</code> element to your <code>pom.xml</code> as shown below:</p>
+
+<pre class="prettyprint"><code class="language-xml">&lt;build&gt;
+  &lt;plugins&gt;
+    ...
+    &lt;plugin&gt;
+      &lt;groupId&gt;com.sciencesakura&lt;/groupId&gt;
+      &lt;artifactId&gt;codenarc-maven-plugin&lt;/artifactId&gt;
+      &lt;version&gt;1.0.0&lt;/version&gt;
+      &lt;executions&gt;
+        &lt;execution&gt;
+          &lt;!-- by default, codenarc:check goal is bound to the verify phase --&gt;
+          &lt;goals&gt;
+            &lt;goal&gt;check&lt;/goal&gt;
+          &lt;/goals&gt;
+        &lt;/execution&gt;
+      &lt;/executions&gt;
+    &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre><section><a id="Configuring_rules"></a>
+<h3>Configuring rules</h3>
+<p>By default, the CodeNarc Maven Plugin looks for a ruleset file at <code>${project.basedir}/config/codenarc/codenarc.xml</code>. If the file does not exist, the plugin falls back to the built-in <code>rulesets/basic.xml</code> ruleset.</p>
+<p>You can specify the ruleset by setting the <code>ruleset</code> parameter.</p>
+
+<pre class="prettyprint"><code class="language-xml">&lt;plugin&gt;
+  &lt;groupId&gt;com.sciencesakura&lt;/groupId&gt;
+  &lt;artifactId&gt;codenarc-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;configuration&gt;
+    &lt;!-- specify the built-in rulesets --&gt;
+    &lt;ruleset&gt;rulesets/basic.xml,rulesets/groovyism.xml&lt;/ruleset&gt;
+    &lt;!-- or specify your own ruleset file --&gt;
+    &lt;ruleset&gt;${project.basedir}/my-codenarc-ruleset.xml&lt;/ruleset&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre></section><section><a id="Override_CodeNarc_version"></a>
+<h3>Override CodeNarc version</h3>
+<p>You can override the CodeNarc version by adding a dependency to the <code>&lt;plugin&gt;</code> element.</p>
+<p><strong>CAUTION</strong>: The CodeNarc Maven Plugin is built against Groovy 4. Make sure to use a compatible CodeNarc version (e.g., <code>x.x.x-groovy-4.x</code>).</p>
+
+<pre class="prettyprint"><code class="language-xml">&lt;plugin&gt;
+  &lt;groupId&gt;com.sciencesakura&lt;/groupId&gt;
+  &lt;artifactId&gt;codenarc-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.codenarc&lt;/groupId&gt;
+      &lt;artifactId&gt;CodeNarc&lt;/artifactId&gt;
+      &lt;version&gt;${codenarc.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/plugin&gt;
+</code></pre></section><section><a id="Other_configurations"></a>
+<h3>Other configurations</h3>
+<p>The following configuration parameters and their default values are available:</p>
+
+<pre class="prettyprint"><code class="language-xml">&lt;plugin&gt;
+  &lt;groupId&gt;com.sciencesakura&lt;/groupId&gt;
+  &lt;artifactId&gt;codenarc-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;configuration&gt;
+    &lt;sourceDirectories&gt;&lt;!-- ${project.compileSourceRoots} --&gt;&lt;/sourceDirectories&gt;
+    &lt;testSourceDirectories&gt;&lt;!-- ${project.testCompileSourceRoots} --&gt;&lt;/testSourceDirectories&gt;
+    &lt;includes&gt;
+      &lt;include&gt;**/*.groovy&lt;/include&gt;
+    &lt;/includes&gt;
+    &lt;excludes&gt;&lt;/excludes&gt;
+    &lt;ruleset&gt;${project.basedir}/config/codenarc/codenarc.xml&lt;/ruleset&gt;
+    &lt;outputFile&gt;${project.build.directory}/CodeNarcXmlReport.xml&lt;/outputFile&gt;
+    &lt;includeTests&gt;false&lt;/includeTests&gt;
+    &lt;consoleOutput&gt;false&lt;/consoleOutput&gt;
+    &lt;failOnError&gt;true&lt;/failOnError&gt;
+    &lt;failOnViolation&gt;true&lt;/failOnViolation&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
+<p>For more information, see the <a href="https://www.sciencesakura.com/codenarc-maven-plugin/plugin-info.html" class="externalLink">Maven site</a>.</p></section></section><section><a id="Acknowledgments"></a>
+<h2>Acknowledgments</h2>
+<ul>
+
+<li><a href="https://github.com/gleclaire/codenarc-maven-plugin" class="externalLink">gleclaire/codenarc-maven-plugin</a> - The original CodeNarc Maven Plugin.</li>
+</ul></section><section><a id="License"></a>
+<h2>License</h2>
+<p>This plugin is licensed under the Apache License 2.0.</p>
+<p>Copyright (c) 2026 sciencesakura.</p></section></section>        </main>
       </div>
     </div>
     <hr/>
