@@ -15,7 +15,7 @@ jobs:
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
-      - run: ./mvnw -e --batch-mode clean deploy -Djacoco.skip=true
+      - run: ./mvnw -e --batch-mode -P deploying clean deploy -Djacoco.skip=true
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
