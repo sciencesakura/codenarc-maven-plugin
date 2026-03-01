@@ -58,7 +58,7 @@ You can specify the ruleset by setting the `ruleset` parameter.
 
 You can override the CodeNarc version by adding a dependency to the `<plugin>` element.
 
-CAUTION: The CodeNarc Maven Plugin is built against Groovy 4. Make sure to use a compatible CodeNarc version (e.g., `x.x.x-groovy-4.x`).
+**CAUTION**: The CodeNarc Maven Plugin is built against Groovy 4. Make sure to use a compatible CodeNarc version (e.g., `x.x.x-groovy-4.x`).
 
 ```xml
 <plugin>

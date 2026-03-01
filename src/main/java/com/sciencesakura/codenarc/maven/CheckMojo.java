@@ -27,14 +27,14 @@ public class CheckMojo extends AbstractMojo {
   private final MavenProject project;
 
   /**
-   * Specifies the location of the source directories to analyze.
+   * Specifies the source directories to analyze.
    */
   @Parameter(defaultValue = "${project.compileSourceRoots}", required = true)
   private List<String> sourceDirectories;
 
   /**
-   * Specifies the location of the test source directories to analyze.
-   * This is only used if {@link #includeTests} is set to {@code true}.
+   * Specifies the test source directories to analyze.
+   * Used only when {@code includeTests} is set to {@code true}.
    */
   @Parameter(defaultValue = "${project.testCompileSourceRoots}")
   private List<String> testSourceDirectories;
@@ -53,7 +53,7 @@ public class CheckMojo extends AbstractMojo {
 
   /**
    * Specifies the location of the CodeNarc ruleset file.
-   * If the default file does not exist, it will fall back to using the built-in {@code rulesets/basic.xml}.
+   * If the default file does not exist, the plugin falls back to the built-in {@code rulesets/basic.xml} ruleset.
    */
   @Parameter(property = "codenarc.ruleset", defaultValue = "${project.basedir}/config/codenarc/codenarc.xml",
       required = true)
@@ -61,8 +61,13 @@ public class CheckMojo extends AbstractMojo {
 
   /**
    * Specifies the location of the CodeNarc report file.
-   * The report format is determined by the file extension: {@code .html} for HTML, {@code .json} for JSON,
-   * {@code .txt} for plain text, and any other extension for XML.
+   * The report format is determined by the file extension:
+   * <ul>
+   * <li>{@code .html} or {@code .htm} for HTML</li>
+   * <li>{@code .json} for JSON</li>
+   * <li>{@code .txt} for plain text</li>
+   * <li>any other extension for XML</li>
+   * </ul>
    */
   @Parameter(property = "codenarc.output.file", defaultValue = "${project.build.directory}/CodeNarcXmlReport.xml")
   private File outputFile;
@@ -110,7 +115,8 @@ public class CheckMojo extends AbstractMojo {
     var results = helper.analyze();
     var violationCount = results.getViolations().size();
     if (0 < violationCount) {
-      var message = String.format("CodeNarc analysis found %d violation%s.", violationCount, violationCount == 1 ? "" : "s");
+      var message = String.format("CodeNarc analysis found %d violation%s.", violationCount,
+          violationCount == 1 ? "" : "s");
       if (outputFile != null) {
         message += String.format(" See %s for details.", outputFile);
       }
@@ -119,7 +125,7 @@ public class CheckMojo extends AbstractMojo {
       }
       getLog().warn(message);
     } else {
-      getLog().info("CodeNarc analysis completed with no violations found.");
+      getLog().info("CodeNarc analysis completed successfully with no violations.");
     }
   }
 }
