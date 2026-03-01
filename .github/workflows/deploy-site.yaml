@@ -11,7 +11,7 @@ jobs:
           distribution: zulu
           cache: maven
       - name: Generate Site
-        run: ./mvnw -e --batch-mode clean site
+        run: ./mvnw -e --batch-mode clean site -Dcheckstyle.skip=true -Djacoco.skip=true
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

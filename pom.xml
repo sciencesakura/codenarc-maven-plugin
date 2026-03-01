@@ -62,6 +62,7 @@
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <maven-invoker-plugin.version>3.9.1</maven-invoker-plugin.version>
     <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
+    <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
     <maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
     <maven-plugin-report-plugin.version>3.15.2</maven-plugin-report-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
@@ -294,6 +295,21 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
+        <configuration>
+          <notimestamp>true</notimestamp>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <version>${maven-plugin-plugin.version}</version>
         <configuration>
@@ -346,17 +362,9 @@
         <version>${gmavenplus-plugin.version}</version>
         <configuration>
           <targetBytecode>${maven.compiler.release}</targetBytecode>
-          <!-- Groovydoc -->
-          <windowTitle>${project.artifactId} ${project.version} API</windowTitle>
-          <docTitle>${project.artifactId} ${project.version} API</docTitle>
-          <header>${project.artifactId} ${project.version} API</header>
-          <footer>Copyright © ${project.inceptionYear} ${project.organization.name}. All rights reserved.</footer>
-          <attachGroovyDocAnnotation>true</attachGroovyDocAnnotation>
-          <scope>public</scope>
         </configuration>
         <executions>
           <execution>
-            <id>compile-groovy</id>
             <goals>
               <goal>addSources</goal>
               <goal>addTestSources</goal>
@@ -367,23 +375,6 @@
               <goal>removeStubs</goal>
               <goal>removeTestStubs</goal>
             </goals>
-          </execution>
-          <execution>
-            <id>groovydoc-jar</id>
-            <goals>
-              <goal>groovydoc-jar</goal>
-            </goals>
-            <phase>package</phase>
-          </execution>
-          <execution>
-            <id>groovydoc-site</id>
-            <goals>
-              <goal>groovydoc</goal>
-            </goals>
-            <phase>site</phase>
-            <configuration>
-              <groovyDocOutputDirectory>${project.reporting.outputDirectory}/gapidocs</groovyDocOutputDirectory>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -426,10 +417,10 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven-checkstyle-plugin.version}</version>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
         <configuration>
-          <skip>true</skip>
+          <notimestamp>true</notimestamp>
         </configuration>
       </plugin>
       <plugin>

@@ -14,4 +14,4 @@ jobs:
           java-version-file: .java-version
           distribution: zulu
           cache: maven
-      - run: ./mvnw -e --batch-mode clean integration-test -Dmaven.source.skip=true -Djacoco.skip=true -DskipGroovydoc=true
+      - run: ./mvnw -e --batch-mode clean integration-test -Dmaven.source.skip=true -Djacoco.skip=true

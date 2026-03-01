@@ -5,4 +5,4 @@
  *
  * @author sciencesakura
  */
-package com.sciencesakura.codenarc.maven
+package com.sciencesakura.codenarc.maven;
