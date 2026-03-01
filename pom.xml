@@ -52,6 +52,8 @@
     <maven.compiler.release>11</maven.compiler.release>
 
     <!-- plugin versions -->
+    <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+    <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
     <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <maven-invoker-plugin.version>3.9.1</maven-invoker-plugin.version>
@@ -65,8 +67,10 @@
 
     <!-- dependency versions -->
     <assertj-core.version>3.27.7</assertj-core.version>
+    <checkstyle.version>12.3.1</checkstyle.version>
     <codenarc.version>3.7.0-groovy-4.0</codenarc.version>
     <junit-jupiter.version>6.0.3</junit-jupiter.version>
+    <lombok.version>1.18.42</lombok.version>
     <maven.version>3.6.3</maven.version>
     <maven-plugin-annotations.version>3.15.2</maven-plugin-annotations.version>
   </properties>
@@ -140,6 +144,12 @@
       <artifactId>CodeNarc</artifactId>
       <version>${codenarc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- test dependencies -->
     <dependency>
@@ -158,6 +168,48 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven-checkstyle-plugin.version}</version>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+          <propertyExpansion>
+            org.checkstyle.google.suppressionfilter.config=${project.basedir}/config/checkstyle/suppressions.xml
+          </propertyExpansion>
+          <consoleOutput>true</consoleOutput>
+          <failOnViolation>true</failOnViolation>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -221,6 +273,9 @@
             <manifest>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
+            <manifestEntries>
+              <Automatic-Module-Name>com.sciencesakura.codenarc.maven</Automatic-Module-Name>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
@@ -298,6 +353,16 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
         <version>${versions-maven-plugin.version}</version>
+        <configuration>
+          <ruleSet>
+            <ignoreVersions>
+              <ignoreVersion>
+                <type>regex</type>
+                <version>.+-(alpha|beta|M\d+).*</version>
+              </ignoreVersion>
+            </ignoreVersions>
+          </ruleSet>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
