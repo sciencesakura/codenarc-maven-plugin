@@ -9,10 +9,10 @@
   <packaging>maven-plugin</packaging>
 
   <name>CodeNarc Maven Plugin</name>
-  <url>https://github.com/sciencesakura/codenarc-maven-plugin</url>
   <description>
     A Maven plugin that integrates CodeNarc, a static analysis tool for Groovy.
   </description>
+  <url>https://www.sciencesakura.com/codenarc-maven-plugin/</url>
   <inceptionYear>2026</inceptionYear>
   <organization>
     <name>sciencesakura.com</name>
@@ -30,6 +30,10 @@
       <email>sakurasakurascience@gmail.com</email>
     </developer>
   </developers>
+
+  <prerequisites>
+    <maven>${maven.version}</maven>
+  </prerequisites>
   <scm>
     <connection>scm:git:https://github.com/sciencesakura/codenarc-maven-plugin.git</connection>
     <developerConnection>scm:git:https://github.com/sciencesakura/codenarc-maven-plugin.git</developerConnection>
@@ -48,7 +52,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <tool.java.version>17</tool.java.version>
-    <groovy.version>4.0.30</groovy.version>
     <maven.compiler.release>11</maven.compiler.release>
 
     <!-- plugin versions -->
@@ -73,29 +76,12 @@
     <assertj-core.version>3.27.7</assertj-core.version>
     <checkstyle.version>12.3.1</checkstyle.version>
     <codenarc.version>3.7.0-groovy-4.0</codenarc.version>
+    <groovy.version>4.0.30</groovy.version>
     <junit-jupiter.version>6.0.3</junit-jupiter.version>
     <lombok.version>1.18.42</lombok.version>
     <maven.version>3.6.3</maven.version>
     <maven-plugin-annotations.version>3.15.2</maven-plugin-annotations.version>
   </properties>
-
-  <repositories>
-    <repository>
-      <name>Central Portal Snapshots</name>
-      <id>central-portal-snapshots</id>
-      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <prerequisites>
-    <maven>${maven.version}</maven>
-  </prerequisites>
 
   <dependencyManagement>
     <dependencies>
@@ -170,6 +156,20 @@
     </dependency>
   </dependencies>
 
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>central-portal-snapshots</id>
+      <name>Central Portal Snapshots</name>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+    </repository>
+  </repositories>
+
   <build>
     <plugins>
       <plugin>
@@ -178,10 +178,10 @@
         <version>${maven-antrun-plugin.version}</version>
         <executions>
           <execution>
-            <phase>pre-site</phase>
             <goals>
               <goal>run</goal>
             </goals>
+            <phase>pre-site</phase>
             <configuration>
               <target>
                 <mkdir dir="${project.basedir}/src/site/markdown"/>
@@ -213,10 +213,10 @@
         </dependencies>
         <executions>
           <execution>
-            <phase>compile</phase>
             <goals>
               <goal>check</goal>
             </goals>
+            <phase>compile</phase>
           </execution>
         </executions>
       </plugin>
@@ -381,17 +381,17 @@
           </execution>
           <execution>
             <id>groovydoc-jar</id>
-            <phase>package</phase>
             <goals>
               <goal>groovydoc-jar</goal>
             </goals>
+            <phase>package</phase>
           </execution>
           <execution>
             <id>groovydoc-site</id>
-            <phase>site</phase>
             <goals>
               <goal>groovydoc</goal>
             </goals>
+            <phase>site</phase>
             <configuration>
               <groovyDocOutputDirectory>${project.reporting.outputDirectory}/gapidocs</groovyDocOutputDirectory>
             </configuration>
