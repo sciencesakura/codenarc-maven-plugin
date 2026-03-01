@@ -11,15 +11,16 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 
 /**
- * Runs CodeNarc analysis on the project's source code and generates a report of any violations found.
+ * Runs CodeNarc analysis on the project's source code.
  * Call {@code mvn codenarc:check} to execute the analysis.
  *
  * @author sciencesakura
  */
-@Mojo(name = "check", defaultPhase = LifecyclePhase.VERIFY)
+@Mojo(name = "check", requiresDependencyResolution = ResolutionScope.TEST, defaultPhase = LifecyclePhase.VERIFY)
 @Getter
 public class CheckMojo extends AbstractMojo {
 

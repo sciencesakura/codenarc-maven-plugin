@@ -11,7 +11,7 @@
   <name>CodeNarc Maven Plugin</name>
   <url>https://github.com/sciencesakura/codenarc-maven-plugin</url>
   <description>
-    A Maven plugin that integrates CodeNarc, a static analysis tool for Groovy code.
+    A Maven plugin that integrates CodeNarc, a static analysis tool for Groovy.
   </description>
   <inceptionYear>2026</inceptionYear>
   <organization>
