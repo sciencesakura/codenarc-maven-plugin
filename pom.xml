@@ -52,6 +52,7 @@
     <maven.compiler.release>11</maven.compiler.release>
 
     <!-- plugin versions -->
+    <maven-antrun-plugin.version>3.2.0</maven-antrun-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
     <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
@@ -59,6 +60,9 @@
     <maven-invoker-plugin.version>3.9.1</maven-invoker-plugin.version>
     <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
     <maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
+    <maven-plugin-report-plugin.version>3.15.2</maven-plugin-report-plugin.version>
+    <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
+    <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
     <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
     <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
     <gmavenplus-plugin.version>4.3.1</gmavenplus-plugin.version>
@@ -170,6 +174,25 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>${maven-antrun-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <mkdir dir="${project.basedir}/src/site/markdown"/>
+                <copy file="${project.basedir}/README.md" tofile="${project.basedir}/src/site/markdown/index.md"/>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${maven-checkstyle-plugin.version}</version>
         <configuration>
@@ -177,6 +200,7 @@
           <propertyExpansion>
             org.checkstyle.google.suppressionfilter.config=${project.basedir}/config/checkstyle/suppressions.xml
           </propertyExpansion>
+          <excludeGeneratedSources>true</excludeGeneratedSources>
           <consoleOutput>true</consoleOutput>
           <failOnViolation>true</failOnViolation>
         </configuration>
@@ -189,7 +213,7 @@
         </dependencies>
         <executions>
           <execution>
-            <phase>validate</phase>
+            <phase>compile</phase>
             <goals>
               <goal>check</goal>
             </goals>
@@ -304,6 +328,14 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>${maven-site-plugin.version}</version>
+        <configuration>
+          <validate>true</validate>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <version>${maven-source-plugin.version}</version>
         <configuration>
@@ -335,6 +367,7 @@
         </configuration>
         <executions>
           <execution>
+            <id>compile-groovy</id>
             <goals>
               <goal>addSources</goal>
               <goal>addTestSources</goal>
@@ -344,8 +377,24 @@
               <goal>compileTests</goal>
               <goal>removeStubs</goal>
               <goal>removeTestStubs</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>groovydoc-jar</id>
+            <phase>package</phase>
+            <goals>
               <goal>groovydoc-jar</goal>
             </goals>
+          </execution>
+          <execution>
+            <id>groovydoc-site</id>
+            <phase>site</phase>
+            <goals>
+              <goal>groovydoc</goal>
+            </goals>
+            <configuration>
+              <groovyDocOutputDirectory>${project.reporting.outputDirectory}/gapidocs</groovyDocOutputDirectory>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -377,7 +426,6 @@
           <execution>
             <goals>
               <goal>prepare-agent</goal>
-              <goal>report</goal>
             </goals>
           </execution>
         </executions>
@@ -393,4 +441,27 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven-checkstyle-plugin.version}</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-report-plugin</artifactId>
+        <version>${maven-plugin-report-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>${maven-project-info-reports-plugin.version}</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
