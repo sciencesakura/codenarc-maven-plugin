@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support the `codenarc.properties` file.
 - Add `excludeGeneratedSources` parameter.
 
+## [1.0.1] - 2026-03-08
+### Fixed
+- Add `src/main/groovy` to `sourceDirectories` if it exists and is not yet included (#1).
+
 ## [1.0.0] - 2026-03-02
 ### Added
 - Initial release.
