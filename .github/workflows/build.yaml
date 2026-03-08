@@ -1,9 +1,25 @@
 name: build
 on:
   pull_request:
+    paths:
+      - '.github/workflows/build.yaml'
+      - '.java-version'
+      - '.mvn/**'
+      - 'config/**'
+      - 'pom.xml'
+      - 'src/**'
+      - '!src/site/**'
   push:
     branches:
       - main
+    paths:
+      - '.github/workflows/build.yaml'
+      - '.java-version'
+      - '.mvn/**'
+      - 'config/**'
+      - 'pom.xml'
+      - 'src/**'
+      - '!src/site/**'
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -1,5 +1,16 @@
 name: deploy site
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '*.md'
+      - '.github/workflows/deploy-site.yaml'
+      - '.java-version'
+      - '.mvn/**'
+      - 'pom.xml'
+      - 'src/main/**'
+      - 'src/site/**'
 jobs:
   deploy-site:
     runs-on: ubuntu-latest
