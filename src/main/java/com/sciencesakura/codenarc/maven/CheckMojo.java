@@ -3,6 +3,7 @@
 package com.sciencesakura.codenarc.maven;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import lombok.Getter;
@@ -28,13 +29,15 @@ public class CheckMojo extends AbstractMojo {
 
   /**
    * Specifies the source directories to analyze.
+   * The plugin adds {@code ${project.basedir}/src/main/groovy} to this list if it exists and is not yet included.
    */
   @Parameter(defaultValue = "${project.compileSourceRoots}", required = true)
   private List<String> sourceDirectories;
 
   /**
    * Specifies the test source directories to analyze.
-   * Used only when {@code includeTests} is set to {@code true}.
+   * The plugin adds {@code ${project.basedir}/src/test/groovy} to this list if it exists and is not yet included.
+   * This parameter is used only if {@link #includeTests} is set to {@code true}.
    */
   @Parameter(defaultValue = "${project.testCompileSourceRoots}")
   private List<String> testSourceDirectories;
@@ -111,6 +114,7 @@ public class CheckMojo extends AbstractMojo {
    */
   @Override
   public void execute() throws MojoFailureException {
+    prepareSourceDirectories();
     var helper = CodeNarcHelper.make(this);
     var results = helper.analyze();
     var violationCount = results.getViolations().size();
@@ -126,6 +130,21 @@ public class CheckMojo extends AbstractMojo {
       getLog().warn(message);
     } else {
       getLog().info("CodeNarc analysis completed successfully with no violations.");
+    }
+  }
+
+  private void prepareSourceDirectories() {
+    var groovySourceDir = new File(project.getBasedir(), "src/main/groovy");
+    if (groovySourceDir.isDirectory() && !sourceDirectories.contains(groovySourceDir.getPath())) {
+      sourceDirectories = new ArrayList<>(sourceDirectories);
+      sourceDirectories.add(groovySourceDir.getPath());
+    }
+    if (includeTests) {
+      var groovyTestSourceDir = new File(project.getBasedir(), "src/test/groovy");
+      if (groovyTestSourceDir.isDirectory() && !testSourceDirectories.contains(groovyTestSourceDir.getPath())) {
+        testSourceDirectories = new ArrayList<>(testSourceDirectories);
+        testSourceDirectories.add(groovyTestSourceDir.getPath());
+      }
     }
   }
 }
