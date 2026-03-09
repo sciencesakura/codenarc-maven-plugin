@@ -29,14 +29,14 @@ public class CheckMojo extends AbstractMojo {
 
   /**
    * Specifies the source directories to analyze.
-   * The plugin adds <code>${project.basedir}/src/main/groovy}</code> to this list if it exists and is not yet included.
+   * The plugin adds <code>${project.basedir}/src/main/groovy</code> to this list if it exists and is not yet included.
    */
   @Parameter(defaultValue = "${project.compileSourceRoots}", required = true)
   private List<String> sourceDirectories;
 
   /**
    * Specifies the test source directories to analyze.
-   * The plugin adds <code>${project.basedir}/src/test/groovy}</code> to this list if it exists and is not yet included.
+   * The plugin adds <code>${project.basedir}/src/test/groovy</code> to this list if it exists and is not yet included.
    * This parameter is used only if {@link #includeTests} is set to {@code true}.
    */
   @Parameter(defaultValue = "${project.testCompileSourceRoots}")
