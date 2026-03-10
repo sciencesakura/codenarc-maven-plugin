@@ -16,14 +16,9 @@
       <plugin>
         <groupId>@project.groupId@</groupId>
         <artifactId>@project.artifactId@</artifactId>
-        <version>@project.version@</version>
         <configuration>
           <ruleset>${project.basedir}/custom-ruleset.xml</ruleset>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.gmavenplus</groupId>
-        <artifactId>gmavenplus-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
