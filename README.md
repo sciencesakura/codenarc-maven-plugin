@@ -20,7 +20,7 @@ The CodeNarc Maven Plugin is available on Maven Central. Add the `<plugin>` elem
     <plugin>
       <groupId>com.sciencesakura</groupId>
       <artifactId>codenarc-maven-plugin</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
       <executions>
         <execution>
           <!-- by default, codenarc:check goal is bound to the verify phase -->
@@ -57,8 +57,6 @@ You can specify the ruleset by setting the `ruleset` parameter.
 ### Override CodeNarc version
 
 You can override the CodeNarc version by adding a dependency to the `<plugin>` element.
-
-**CAUTION**: The CodeNarc Maven Plugin is built against Groovy 4. Make sure to use a compatible CodeNarc version (e.g., `x.x.x-groovy-4.x`).
 
 ```xml
 <plugin>
