@@ -70,7 +70,7 @@
     <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
     <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
     <gmavenplus-plugin.version>4.3.1</gmavenplus-plugin.version>
-    <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
     <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
 
     <!-- dependency versions -->
