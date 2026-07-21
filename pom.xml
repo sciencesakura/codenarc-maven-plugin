@@ -5,7 +5,7 @@
 
   <groupId>com.sciencesakura</groupId>
   <artifactId>codenarc-maven-plugin</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <packaging>maven-plugin</packaging>
 
   <name>CodeNarc Maven Plugin</name>
@@ -51,7 +51,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <tool.java.version>17</tool.java.version>
+    <java.version>17</java.version>
     <maven.compiler.release>11</maven.compiler.release>
 
     <!-- plugin versions -->
@@ -76,7 +76,7 @@
     <!-- dependency versions -->
     <assertj-core.version>3.27.7</assertj-core.version>
     <checkstyle.version>12.3.1</checkstyle.version>
-    <codenarc.version>3.7.0-groovy-4.0</codenarc.version>
+    <codenarc.version>4.0.0</codenarc.version>
     <groovy.version>4.0.30</groovy.version>
     <junit-jupiter.version>6.0.3</junit-jupiter.version>
     <lombok.version>1.18.42</lombok.version>
@@ -232,7 +232,7 @@
         <configuration>
           <rules>
             <requireJavaVersion>
-              <version>${tool.java.version}</version>
+              <version>${java.version}</version>
             </requireJavaVersion>
             <requireMavenVersion>
               <version>[3.6.3,)</version>
