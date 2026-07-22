@@ -16,19 +16,6 @@ final class Files {
   }
 
   /**
-   * Returns the extension of the given file.
-   *
-   * @param file the file to get the extension of
-   * @return the extension of the file, or an empty string if it has no extension
-   */
-  static String extension(File file) {
-    // when upgrade to Groovy 5, this can be replaced with `File#getExtension()`.
-    def name = file.name
-    def index = name.lastIndexOf('.')
-    index < 0 ? '' : name.substring(index + 1).toLowerCase()
-  }
-
-  /**
    * Tests whether the given path is a directory.
    *
    * @param path the path to check

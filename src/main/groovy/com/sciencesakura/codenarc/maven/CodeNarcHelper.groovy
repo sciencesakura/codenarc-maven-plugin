@@ -93,7 +93,7 @@ class CodeNarcHelper {
   private List<ReportWriter> makeReportWriters() {
     def writers = []
     if (outputFile != null) {
-      def outputFileWriter = switch (Files.extension(outputFile)) {
+      def outputFileWriter = switch (outputFile.extension) {
         case ~/html?/ -> new HtmlReportWriter()
         case 'json' -> new JsonReportWriter()
         case 'txt' -> new TextReportWriter()
