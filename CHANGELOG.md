@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump org.jacoco:jacoco-maven-plugin from 0.8.14 to 0.8.15 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/13).
 - Bump org.projectlombok:lombok from 1.18.42 to 1.18.46 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/15).
 - Bump org.sonatype.central:central-publishing-maven-plugin from 0.10.0 to 0.11.0 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/16).
+- chore(deps): Upgrade Groovy from 4.0.30 to 5.0.7 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/17).
+- chore: Update ruleset-schema.xsd's URL path from /v3.7.0/ to /v4.0.0/ (https://github.com/sciencesakura/codenarc-maven-plugin/pull/18).
 
 ## [1.0.1] - 2026-03-08
 ### Fixed
