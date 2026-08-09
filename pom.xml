@@ -75,7 +75,7 @@
 
     <!-- dependency versions -->
     <assertj-core.version>3.27.7</assertj-core.version>
-    <checkstyle.version>12.3.1</checkstyle.version>
+    <checkstyle.version>13.9.0</checkstyle.version>
     <codenarc.version>4.0.0</codenarc.version>
     <groovy.version>5.0.7</groovy.version>
     <junit-jupiter.version>6.1.2</junit-jupiter.version>
