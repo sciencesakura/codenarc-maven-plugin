@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- feat: add the `skip` parameter (`codenarc.skip` property) to skip the analysis.
+
 ### Changed
 - Bump org.apache.maven.plugins:maven-invoker-plugin from 3.9.1 to 3.10.1 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/19).
 - Bump org.junit.jupiter:junit-jupiter from 6.0.3 to 6.1.2 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/20).
