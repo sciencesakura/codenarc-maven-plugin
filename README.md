@@ -20,7 +20,7 @@ The CodeNarc Maven Plugin is available on Maven Central. Add the `<plugin>` elem
     <plugin>
       <groupId>com.sciencesakura</groupId>
       <artifactId>codenarc-maven-plugin</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.3</version>
       <executions>
         <execution>
           <!-- by default, codenarc:check goal is bound to the verify phase -->
