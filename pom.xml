@@ -69,8 +69,8 @@
     <maven-site-plugin.version>3.22.0</maven-site-plugin.version>
     <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
     <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
-    <gmavenplus-plugin.version>5.1.0</gmavenplus-plugin.version>
     <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.10.5.0</spotbugs-maven-plugin.version>
     <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
 
     <!-- dependency versions -->
@@ -79,7 +79,6 @@
     <codenarc.version>4.0.0</codenarc.version>
     <groovy.version>5.0.8</groovy.version>
     <junit-jupiter.version>6.1.2</junit-jupiter.version>
-    <lombok.version>1.18.46</lombok.version>
     <maven.version>3.6.3</maven.version>
     <maven-plugin-annotations.version>3.15.2</maven-plugin-annotations.version>
   </properties>
@@ -100,6 +99,7 @@
     <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -123,12 +123,6 @@
       <groupId>org.codenarc</groupId>
       <artifactId>CodeNarc</artifactId>
       <version>${codenarc.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <scope>provided</scope>
     </dependency>
 
     <!-- test dependencies -->
@@ -215,15 +209,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
-        <configuration>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
-          </annotationProcessorPaths>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -346,24 +331,18 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.gmavenplus</groupId>
-        <artifactId>gmavenplus-plugin</artifactId>
-        <version>${gmavenplus-plugin.version}</version>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>${spotbugs-maven-plugin.version}</version>
         <configuration>
-          <targetBytecode>${maven.compiler.release}</targetBytecode>
+          <excludeFilterFile>${project.basedir}/config/spotbugs/exclude.xml</excludeFilterFile>
         </configuration>
         <executions>
           <execution>
             <goals>
-              <goal>addSources</goal>
-              <goal>addTestSources</goal>
-              <goal>generateStubs</goal>
-              <goal>compile</goal>
-              <goal>generateTestStubs</goal>
-              <goal>compileTests</goal>
-              <goal>removeStubs</goal>
-              <goal>removeTestStubs</goal>
+              <goal>check</goal>
             </goals>
+            <phase>test</phase>
           </execution>
         </executions>
       </plugin>
