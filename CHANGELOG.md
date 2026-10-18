@@ -13,7 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - build(deps): Bump com.puppycrawl.tools:checkstyle from 12.3.1 to 13.9.0 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/21).
 - Bump org.apache.maven.plugins:maven-jar-plugin from 3.5.0 to 3.5.1 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/22).
 - build(deps): Bump org.apache.groovy:groovy-bom from 5.0.7 to 5.0.8 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/24).
-- refactor: Rewrite the plugin implementation from Groovy to Java.
+- refactor: Rewrite the plugin implementation from Groovy to Java (https://github.com/sciencesakura/codenarc-maven-plugin/pull/35).
+- build(deps): Bump org.apache.maven:apache-maven from 3.9.11 to 3.9.16 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/25).
+- build(deps-dev): Bump org.junit.jupiter:junit-jupiter from 6.1.2 to 6.1.3 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/26).
+- build(deps): Bump actions/setup-java from 5 to 6 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/30).
+- build(deps): Bump com.puppycrawl.tools:checkstyle from 13.9.0 to 14.1.0 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/34).
+- ci: prevent parallel runs (https://github.com/sciencesakura/codenarc-maven-plugin/pull/37).
+- build: remove explicit maven-compiler-plugin setting (https://github.com/sciencesakura/codenarc-maven-plugin/pull/38).
 
 ## [1.0.2] - 2026-07-23
 ### Changed
