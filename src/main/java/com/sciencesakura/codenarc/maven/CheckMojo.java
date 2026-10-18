@@ -4,7 +4,9 @@ package com.sciencesakura.codenarc.maven;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
@@ -182,7 +184,20 @@ public class CheckMojo extends AbstractMojo {
     if (ruleset.equals(defaultRuleSet.getPath()) && !defaultRuleSet.exists()) {
       return "rulesets/basic.xml";
     }
-    return new File(ruleset).exists() ? "file:" + ruleset : ruleset;
+    return Arrays.stream(ruleset.split(","))
+        .map(String::trim)
+        .filter(s -> !s.isEmpty())
+        .map(this::resolveRuleSetFile)
+        .collect(Collectors.joining(","));
+  }
+
+  private String resolveRuleSetFile(String path) {
+    var file = new File(path);
+    if (!file.isAbsolute()) {
+      file = new File(project.getBasedir(), path);
+    }
+    // an existing file takes precedence; otherwise pass the path to CodeNarc as is (classpath resource or URL)
+    return file.isFile() ? file.toURI().toString() : path;
   }
 
   private SourceAnalyzer makeSourceAnalyzer() {
