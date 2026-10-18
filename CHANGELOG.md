@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- feat: add the `skip` parameter (`codenarc.skip` property) to skip the analysis.
+- feat: add the `skip` parameter (`codenarc.skip` property) to skip the analysis (https://github.com/sciencesakura/codenarc-maven-plugin/pull/40).
 
 ### Changed
 - Bump org.apache.maven.plugins:maven-invoker-plugin from 3.9.1 to 3.10.1 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/19).
@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - build: remove explicit maven-compiler-plugin setting (https://github.com/sciencesakura/codenarc-maven-plugin/pull/38).
 
 ### Fixed
-- fix: resolve relative file paths in the `ruleset` parameter against `${project.basedir}` instead of the working directory.
+- fix: resolve relative file paths in the `ruleset` parameter against `${project.basedir}` instead of the working directory (https://github.com/sciencesakura/codenarc-maven-plugin/pull/41).
 
 ## [1.0.2] - 2026-07-23
 ### Changed
