@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.sciencesakura.codenarc.maven","l":"CheckMojo"},{"p":"com.sciencesakura.codenarc.maven","l":"HelpMojo"}];updateSearchResults();
+typeSearchIndex = [{"p":"com.sciencesakura.codenarc.maven","l":"AggregateSourceAnalyzer"},{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.sciencesakura.codenarc.maven","l":"CheckMojo"},{"p":"com.sciencesakura.codenarc.maven","l":"HelpMojo"},{"p":"com.sciencesakura.codenarc.maven","l":"ResultsMerger"}];updateSearchResults();
