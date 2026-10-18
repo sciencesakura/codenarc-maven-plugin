@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - build: Upgrade the Java used for building from 17 to 21 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/23).
 - build(deps): Bump com.puppycrawl.tools:checkstyle from 12.3.1 to 13.9.0 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/21).
 - Bump org.apache.maven.plugins:maven-jar-plugin from 3.5.0 to 3.5.1 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/22).
+- build(deps): Bump org.apache.groovy:groovy-bom from 5.0.7 to 5.0.8 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/24).
 
 ## [1.0.2] - 2026-07-23
 ### Changed
