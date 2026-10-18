@@ -36,7 +36,8 @@ The CodeNarc Maven Plugin is available on Maven Central. Add the `<plugin>` elem
 
 ### Configuring rules
 
-By default, the CodeNarc Maven Plugin looks for a ruleset file at `${project.basedir}/config/codenarc/codenarc.xml`. If the file does not exist, the plugin falls back to the built-in `rulesets/basic.xml` ruleset.
+By default, the CodeNarc Maven Plugin looks for a ruleset file at `${project.basedir}/config/codenarc/codenarc.xml`.
+If the file does not exist, the plugin falls back to the built-in `rulesets/basic.xml` ruleset.
 
 You can specify the ruleset by setting the `ruleset` parameter.
 
