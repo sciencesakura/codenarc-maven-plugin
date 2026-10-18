@@ -70,7 +70,6 @@
     <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.10.5.0</spotbugs-maven-plugin.version>
-    <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
 
     <!-- dependency versions -->
     <assertj-core.version>3.27.7</assertj-core.version>
@@ -213,9 +212,6 @@
             <requireJavaVersion>
               <version>${java.version}</version>
             </requireJavaVersion>
-            <requireMavenVersion>
-              <version>[3.6.3,)</version>
-            </requireMavenVersion>
           </rules>
         </configuration>
         <executions>
@@ -339,21 +335,6 @@
             <phase>test</phase>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>versions-maven-plugin</artifactId>
-        <version>${versions-maven-plugin.version}</version>
-        <configuration>
-          <ruleSet>
-            <ignoreVersions>
-              <ignoreVersion>
-                <type>regex</type>
-                <version>.+-(alpha|beta|M\d+).*</version>
-              </ignoreVersion>
-            </ignoreVersions>
-          </ruleSet>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
