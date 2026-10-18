@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ci: prevent parallel runs (https://github.com/sciencesakura/codenarc-maven-plugin/pull/37).
 - build: remove explicit maven-compiler-plugin setting (https://github.com/sciencesakura/codenarc-maven-plugin/pull/38).
 
+### Fixed
+- fix: resolve relative file paths in the `ruleset` parameter against `${project.basedir}` instead of the working directory.
+
 ## [1.0.2] - 2026-07-23
 ### Changed
 - Upgrade CodeNarc dependency to 4.0.0 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/7).
