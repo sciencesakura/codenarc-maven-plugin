@@ -108,6 +108,14 @@ public class CheckMojo extends AbstractMojo {
   private boolean failOnViolation;
 
   /**
+   * Whether to skip the analysis.
+   *
+   * @since 1.0.3
+   */
+  @Parameter(property = "codenarc.skip", defaultValue = "false")
+  private boolean skip;
+
+  /**
    * Constructs a new {@code CheckMojo}.
    *
    * @param project the Maven project
@@ -122,6 +130,10 @@ public class CheckMojo extends AbstractMojo {
    */
   @Override
   public void execute() throws MojoFailureException {
+    if (skip) {
+      getLog().info("Skipping CodeNarc analysis.");
+      return;
+    }
     prepareSourceDirectories();
     var results = analyze();
     var violationCount = results.getViolations().size();

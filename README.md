@@ -95,6 +95,7 @@ The following configuration parameters and their default values are available:
     <consoleOutput>false</consoleOutput>
     <failOnError>true</failOnError>
     <failOnViolation>true</failOnViolation>
+    <skip>false</skip>
   </configuration>
 </plugin>
 ```
