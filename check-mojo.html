@@ -134,6 +134,11 @@
  <li>any other extension for XML</li>
 </ul><br /><strong>Default</strong>: <code>${project.build.directory}/CodeNarcXmlReport.xml</code><br /><strong>User Property</strong>: <code>codenarc.output.file</code></td></tr>
 <tr class="b">
+<td><a href="#skip"><code>&lt;skip&gt;</code></a></td>
+<td><code>boolean</code></td>
+<td><code>1.0.3</code></td>
+<td>Whether to skip the analysis.<br /><strong>Default</strong>: <code>false</code><br /><strong>User Property</strong>: <code>codenarc.skip</code></td></tr>
+<tr class="a">
 <td><a href="#testSourceDirectories"><code>&lt;testSourceDirectories&gt;</code></a></td>
 <td><code>List&lt;String&gt;</code></td>
 <td><code>-</code></td>
@@ -199,7 +204,15 @@
 <li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>Yes</code></li>
 <li><strong>User Property</strong>: <code>codenarc.ruleset</code></li>
-<li><strong>Default</strong>: <code>${project.basedir}/config/codenarc/codenarc.xml</code></li></ul><hr /></section><a id="sourceDirectories"></a><section><a id="a.3CsourceDirectories.3E"></a>
+<li><strong>Default</strong>: <code>${project.basedir}/config/codenarc/codenarc.xml</code></li></ul><hr /></section><a id="skip"></a><section><a id="a.3Cskip.3E"></a>
+<h3>&lt;skip&gt;</h3>
+<div>Whether to skip the analysis.</div>
+<ul>
+<li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Since</strong>: <code>1.0.3</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>User Property</strong>: <code>codenarc.skip</code></li>
+<li><strong>Default</strong>: <code>false</code></li></ul><hr /></section><a id="sourceDirectories"></a><section><a id="a.3CsourceDirectories.3E"></a>
 <h3>&lt;sourceDirectories&gt;</h3>
 <div>Specifies the source directories to analyze. The plugin adds <code>${project.basedir}/src/main/groovy</code> to this list if it exists and is not already included.</div>
 <ul>
