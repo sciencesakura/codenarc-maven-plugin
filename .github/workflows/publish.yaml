@@ -1,5 +1,10 @@
 name: publish
+
 on: workflow_dispatch
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   publish-artifacts:
     runs-on: ubuntu-latest
