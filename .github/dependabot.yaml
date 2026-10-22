@@ -11,9 +11,6 @@ updates:
       interval: weekly
     cooldown:
       default-days: 10
-    ignore:
-      - dependency-name: "org.apache.maven:maven-core"
-      - dependency-name: "org.apache.maven:maven-plugin-api"
   - package-ecosystem: github-actions
     directory: /
     schedule:
