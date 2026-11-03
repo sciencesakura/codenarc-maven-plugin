@@ -12,7 +12,7 @@ import org.codenarc.results.Results;
  *
  * @author sciencesakura
  */
-public final class ResultsMerger {
+final class ResultsMerger {
 
   private ResultsMerger() {
   }
@@ -23,7 +23,7 @@ public final class ResultsMerger {
    * @param results the results to merge
    * @return a {@link DirectoryResults} containing all the merged results
    */
-  public static Results merge(Iterable<? extends Results> results) {
+  static Results merge(Iterable<? extends Results> results) {
     var root = new DirectoryResults("");
     mergeInternal(root, results);
     var merged = new DirectoryResults();
