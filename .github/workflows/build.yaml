@@ -15,6 +15,8 @@ on:
       - main
     paths:
       - '.github/workflows/build.yaml'
+      - '.github/workflows/publish-artifacts.yaml'
+      - '.github/workflows/publish-snapshot.yaml'
       - '.java-version'
       - '.mvn/**'
       - 'config/**'
@@ -39,4 +41,4 @@ jobs:
           java-version-file: .java-version
           distribution: zulu
           cache: maven
-      - run: ./mvnw -e --batch-mode clean integration-test -Dmaven.source.skip=true -Djacoco.skip=true
+      - run: ./mvnw -e --batch-mode integration-test -Dmaven.source.skip=true -Djacoco.skip=true

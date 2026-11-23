@@ -1,18 +1,13 @@
 name: publish snapshot
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - build
+    types:
+      - completed
     branches:
       - main
-    paths:
-      - '.github/workflows/publish-artifacts.yaml'
-      - '.github/workflows/publish-snapshot.yaml'
-      - '.java-version'
-      - '.mvn/**'
-      - 'config/**'
-      - 'pom.xml'
-      - 'src/**'
-      - '!src/site/**'
 
 permissions:
   contents: read
@@ -22,11 +17,16 @@ concurrency:
 
 jobs:
   check-version:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push'
     runs-on: ubuntu-latest
     outputs:
       is-snapshot: ${{ steps.version.outputs.is-snapshot }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
       - uses: actions/setup-java@v6
         with:
           java-version-file: .java-version
@@ -46,4 +46,7 @@ jobs:
     needs: check-version
     if: needs.check-version.outputs.is-snapshot == 'true'
     uses: ./.github/workflows/publish-artifacts.yaml
+    with:
+      ref: ${{ github.event.workflow_run.head_sha }}
+      skip-tests: true
     secrets: inherit
