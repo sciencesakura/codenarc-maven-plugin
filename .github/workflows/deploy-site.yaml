@@ -27,9 +27,9 @@ jobs:
           java-version-file: .java-version
           distribution: zulu
           cache: maven
-      - name: Generate Site
-        run: ./mvnw -e --batch-mode site -Dcheckstyle.skip=true -Djacoco.skip=true
-      - name: Deploy to GitHub Pages
+      - name: Generate the site
+        run: ./mvnw -e --batch-mode site -Djacoco.skip=true -Dcheckstyle.skip=true
+      - name: Deploy the site to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
