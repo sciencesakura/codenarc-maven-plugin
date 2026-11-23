@@ -1,0 +1,49 @@
+name: publish snapshot
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/publish-artifacts.yaml'
+      - '.github/workflows/publish-snapshot.yaml'
+      - '.java-version'
+      - '.mvn/**'
+      - 'config/**'
+      - 'pom.xml'
+      - 'src/**'
+      - '!src/site/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      is-snapshot: ${{ steps.version.outputs.is-snapshot }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          java-version-file: .java-version
+          distribution: zulu
+          cache: maven
+      - id: version
+        run: |
+          version=$(./mvnw --batch-mode --quiet help:evaluate -Dexpression=project.version -DforceStdout)
+          echo "project.version: $version"
+          if [[ "$version" == *-SNAPSHOT ]]; then
+            echo "is-snapshot=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is-snapshot=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  publish-artifacts:
+    needs: check-version
+    if: needs.check-version.outputs.is-snapshot == 'true'
+    uses: ./.github/workflows/publish-artifacts.yaml
+    secrets: inherit
