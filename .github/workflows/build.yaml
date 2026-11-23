@@ -41,4 +41,5 @@ jobs:
           java-version-file: .java-version
           distribution: zulu
           cache: maven
-      - run: ./mvnw -e --batch-mode integration-test -Dmaven.source.skip=true -Djacoco.skip=true
+      - name: Build and run the tests
+        run: ./mvnw -e --batch-mode verify -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.source.skip=true

@@ -27,14 +27,10 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
-      - uses: actions/setup-java@v6
-        with:
-          java-version-file: .java-version
-          distribution: zulu
-          cache: maven
-      - id: version
+      - name: Check whether the project version is a SNAPSHOT
+        id: version
         run: |
-          version=$(./mvnw --batch-mode --quiet help:evaluate -Dexpression=project.version -DforceStdout)
+          version=$(yq -p xml -o yaml '.project.version' pom.xml)
           echo "project.version: $version"
           if [[ "$version" == *-SNAPSHOT ]]; then
             echo "is-snapshot=true" >> "$GITHUB_OUTPUT"
