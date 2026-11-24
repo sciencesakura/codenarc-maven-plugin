@@ -13,8 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - build(deps-dev): Bump org.apache.maven.plugins:maven-plugin-plugin from 3.15.2 to 3.16.0 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/45).
 - build(deps-dev): bump org.sonatype.central:central-publishing-maven-plugin from 0.11.0 to 0.12.0 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/48).
 - build(deps-dev): Bump org.apache.maven.plugins:maven-plugin-report-plugin from 3.15.2 to 3.16.0 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/50).
-- refactor: make ResultsMerger package-private (https://github.com/sciencesakura/codenarc-maven-plugin/pull/51).
-- build: remove the groovy-bom <dependencyManagement> element (https://github.com/sciencesakura/codenarc-maven-plugin/pull/55).
+- refactor: make `ResultsMerger` package-private (https://github.com/sciencesakura/codenarc-maven-plugin/pull/51).
+- build: remove the groovy-bom `<dependencyManagement>` element (https://github.com/sciencesakura/codenarc-maven-plugin/pull/55).
+- ci: publish artifacts automatically via GitHub Actions (https://github.com/sciencesakura/codenarc-maven-plugin/pull/57).
+- ci: publish SNAPSHOTs after the build workflow succeeds instead of rerunning tests (https://github.com/sciencesakura/codenarc-maven-plugin/pull/58).
+- ci: reduce redundant CI processes (https://github.com/sciencesakura/codenarc-maven-plugin/pull/59).
+- build: set up Mockito as a Java agent (https://github.com/sciencesakura/codenarc-maven-plugin/pull/60).
+- test: implement unit tests for CheckMojo (https://github.com/sciencesakura/codenarc-maven-plugin/pull/61).
 
 ## [1.0.3] - 2026-10-19
 ### Added
