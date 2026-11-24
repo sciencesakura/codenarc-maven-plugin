@@ -2,6 +2,10 @@
 
 package com.sciencesakura.codenarc.maven;
 
+import static com.sciencesakura.codenarc.maven.TestResults.dir;
+import static com.sciencesakura.codenarc.maven.TestResults.file;
+import static com.sciencesakura.codenarc.maven.TestResults.newResults;
+import static com.sciencesakura.codenarc.maven.TestResults.violations;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -9,12 +13,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import org.codenarc.analyzer.SourceAnalyzer;
-import org.codenarc.results.DirectoryResults;
-import org.codenarc.results.FileResults;
 import org.codenarc.results.Results;
-import org.codenarc.rule.Violation;
 import org.codenarc.ruleset.RuleSet;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +22,6 @@ import org.junit.jupiter.api.Test;
  * Unit tests for {@link AggregateSourceAnalyzer}.
  */
 class AggregateSourceAnalyzerTest {
-
-  static final Violation DUMMY_VIOLATION = new Violation();
 
   static final RuleSet DUMMY_RULE_SET = Collections::emptyList;
 
@@ -50,7 +48,7 @@ class AggregateSourceAnalyzerTest {
     var expected = newResults(
         file("Foo.groovy", violations(1)),
         file("Bar.groovy", violations(2)));
-    assertThat(actual).usingEquals(ResultsUtil::equals).isEqualTo(expected);
+    assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
   @Test
@@ -112,7 +110,7 @@ class AggregateSourceAnalyzerTest {
                 dir("org/example/test",
                     file("org/example/test/Baz.groovy", violations(3))),
                 file("org/example/BarSpec.groovy", violations(5)))));
-    assertThat(actual).usingEquals(ResultsUtil::equals).isEqualTo(expected);
+    assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
   @Test
@@ -127,7 +125,7 @@ class AggregateSourceAnalyzerTest {
 
     // Assert
     var expected = newResults();
-    assertThat(actual).usingEquals(ResultsUtil::equals).isEqualTo(expected);
+    assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
   @Test
@@ -150,7 +148,7 @@ class AggregateSourceAnalyzerTest {
     // .
     // └── Foo.groovy (1 violation)
     var expected = newResults(file("Foo.groovy", violations(1)));
-    assertThat(actual).usingEquals(ResultsUtil::equals).isEqualTo(expected);
+    assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
   @Test
@@ -178,7 +176,7 @@ class AggregateSourceAnalyzerTest {
     var expected = newResults(
         file("foo", violations(1)),
         dir("foo", file("foo/bar", violations(2))));
-    assertThat(actual).usingEquals(ResultsUtil::equals).isEqualTo(expected);
+    assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
   static SourceAnalyzer newStubSourceAnalyzer(Results results, String... sourceDirs) {
@@ -186,57 +184,5 @@ class AggregateSourceAnalyzerTest {
     when(stub.getSourceDirectories()).thenReturn(List.of(sourceDirs));
     when(stub.analyze(any(RuleSet.class))).thenReturn(results);
     return stub;
-  }
-
-  static Results newResults(Results... children) {
-    return dir(null, dir("", children));
-  }
-
-  static Results dir(String path, Results... children) {
-    var dir = path == null ? new DirectoryResults() : new DirectoryResults(path);
-    for (var child : children) {
-      dir.addChild(child);
-    }
-    return dir;
-  }
-
-  static Results file(String path, List<Violation> violations) {
-    return new FileResults(path, violations);
-  }
-
-  static List<Violation> violations(int count) {
-    return Collections.nCopies(count, DUMMY_VIOLATION);
-  }
-
-  static class ResultsUtil {
-
-    static boolean equals(Results a, Results b) {
-      if (a == b) {
-        return true;
-      }
-      if (!Objects.equals(a.getPath(), b.getPath())) {
-        return false;
-      }
-      if (a instanceof FileResults && b instanceof FileResults) {
-        return Objects.equals(a.getViolations(), b.getViolations());
-      }
-      if (a instanceof DirectoryResults && b instanceof DirectoryResults) {
-        var childrenA = a.getChildren();
-        var childrenB = b.getChildren();
-        if (childrenA == null || childrenB == null) {
-          return childrenA == null && childrenB == null;
-        }
-        if (childrenA.size() != childrenB.size()) {
-          return false;
-        }
-        for (int i = 0; i < childrenA.size(); ++i) {
-          if (!equals(childrenA.get(i), childrenB.get(i))) {
-            return false;
-          }
-        }
-        return true;
-      }
-      return false;
-    }
   }
 }

@@ -45,6 +45,15 @@ public class AggregateSourceAnalyzer implements SourceAnalyzer {
   }
 
   /**
+   * Returns the aggregated source analyzers.
+   *
+   * @return the unmodifiable list of the aggregated source analyzers
+   */
+  public List<SourceAnalyzer> getDelegates() {
+    return delegates;
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override

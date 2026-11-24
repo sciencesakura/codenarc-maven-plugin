@@ -15,7 +15,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
-import org.codenarc.CodeNarcRunner;
 import org.codenarc.analyzer.FilesystemSourceAnalyzer;
 import org.codenarc.analyzer.SourceAnalyzer;
 import org.codenarc.report.AbstractReportWriter;
@@ -24,7 +23,6 @@ import org.codenarc.report.JsonReportWriter;
 import org.codenarc.report.ReportWriter;
 import org.codenarc.report.TextReportWriter;
 import org.codenarc.report.XmlReportWriter;
-import org.codenarc.results.Results;
 
 /**
  * Runs CodeNarc analysis on the project's source code.
@@ -36,6 +34,8 @@ import org.codenarc.results.Results;
 public class CheckMojo extends AbstractMojo {
 
   private final MavenProject project;
+
+  private final CodeNarcExecutor executor;
 
   /**
    * Specifies the source directories to analyze.
@@ -120,11 +120,13 @@ public class CheckMojo extends AbstractMojo {
   /**
    * Constructs a new {@code CheckMojo}.
    *
-   * @param project the Maven project
+   * @param project  the Maven project
+   * @param executor the CodeNarc executor
    */
   @Inject
-  public CheckMojo(MavenProject project) {
+  CheckMojo(MavenProject project, CodeNarcExecutor executor) {
     this.project = project;
+    this.executor = executor;
   }
 
   /**
@@ -137,7 +139,7 @@ public class CheckMojo extends AbstractMojo {
       return;
     }
     prepareSourceDirectories();
-    var results = analyze();
+    var results = executor.execute(makeRuleSetFiles(), makeSourceAnalyzer(), makeReportWriters());
     var violationCount = results.getViolations().size();
     if (0 < violationCount) {
       var message = String.format("CodeNarc analysis found %d violation%s.", violationCount,
@@ -169,14 +171,6 @@ public class CheckMojo extends AbstractMojo {
         testSourceDirectories = testDirs;
       }
     }
-  }
-
-  private Results analyze() {
-    var runner = new CodeNarcRunner();
-    runner.setRuleSetFiles(makeRuleSetFiles());
-    runner.setSourceAnalyzer(makeSourceAnalyzer());
-    runner.setReportWriters(makeReportWriters());
-    return runner.execute();
   }
 
   private String makeRuleSetFiles() {
