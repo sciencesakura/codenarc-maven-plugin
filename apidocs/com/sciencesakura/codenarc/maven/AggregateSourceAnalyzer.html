@@ -133,9 +133,14 @@ implements org.codenarc.analyzer.SourceAnalyzer</span></div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.codenarc.results.Results</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#analyze(org.codenarc.ruleset.RuleSet)" class="member-name-link">analyze</a><wbr>(org.codenarc.ruleset.RuleSet&nbsp;ruleSet)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSourceDirectories()" class="member-name-link">getSourceDirectories</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;org.codenarc.analyzer.SourceAnalyzer&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDelegates()" class="member-name-link">getDelegates</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the aggregated source analyzers.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSourceDirectories()" class="member-name-link">getSourceDirectories</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
 </div>
 </div>
 </div>
@@ -179,6 +184,17 @@ implements org.codenarc.analyzer.SourceAnalyzer</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>getSourceDirectories</code>&nbsp;in interface&nbsp;<code>org.codenarc.analyzer.SourceAnalyzer</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getDelegates()">
+<h3>getDelegates</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;org.codenarc.analyzer.SourceAnalyzer&gt;</span>&nbsp;<span class="element-name">getDelegates</span>()</div>
+<div class="block">Returns the aggregated source analyzers.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the unmodifiable list of the aggregated source analyzers</dd>
 </dl>
 </section>
 </li>
