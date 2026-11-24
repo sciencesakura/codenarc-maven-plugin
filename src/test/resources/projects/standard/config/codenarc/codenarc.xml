@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns="http://codenarc.org/ruleset/1.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://codenarc.org/ruleset/1.0 https://raw.githubusercontent.com/CodeNarc/CodeNarc/v4.0.0/src/main/resources/ruleset-schema.xsd">
+</ruleset>
