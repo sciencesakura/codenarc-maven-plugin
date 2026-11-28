@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ci: reduce redundant CI processes (https://github.com/sciencesakura/codenarc-maven-plugin/pull/59).
 - build: set up Mockito as a Java agent (https://github.com/sciencesakura/codenarc-maven-plugin/pull/60).
 - test: implement unit tests for CheckMojo (https://github.com/sciencesakura/codenarc-maven-plugin/pull/61).
+- build(deps): Bump org.apache.maven:apache-maven from 3.10.0 to 3.10.1 (https://github.com/sciencesakura/codenarc-maven-plugin/pull/62).
+- feat: sort merged results by name (https://github.com/sciencesakura/codenarc-maven-plugin/pull/63).
 
 ## [1.0.3] - 2026-10-19
 ### Added
