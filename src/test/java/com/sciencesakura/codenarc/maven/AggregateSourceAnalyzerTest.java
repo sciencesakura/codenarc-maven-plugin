@@ -29,12 +29,12 @@ class AggregateSourceAnalyzerTest {
   void mergeTwoFileResults() {
     // Arrange
     // .
-    // └── Foo.groovy (1 violation)
-    var result1 = newResults(file("Foo.groovy", violations(1)));
+    // └── Cherry.groovy (1 violation)
+    var result1 = newResults(file("Cherry.groovy", violations(1)));
     var sa1 = newStubSourceAnalyzer(result1, "src/main/groovy");
     // .
-    // └── Bar.groovy (2 violation)
-    var result2 = newResults(file("Bar.groovy", violations(2)));
+    // └── Apple.groovy (2 violations)
+    var result2 = newResults(file("Apple.groovy", violations(2)));
     var sa2 = newStubSourceAnalyzer(result2, "src/test/groovy");
     var sut = new AggregateSourceAnalyzer(List.of(sa1, sa2));
 
@@ -43,11 +43,11 @@ class AggregateSourceAnalyzerTest {
 
     // Assert
     // .
-    // ├── Foo.groovy (1 violation)
-    // └── Bar.groovy (2 violation)
+    // ├── Apple.groovy (2 violations)
+    // └── Cherry.groovy (1 violation)
     var expected = newResults(
-        file("Foo.groovy", violations(1)),
-        file("Bar.groovy", violations(2)));
+        file("Apple.groovy", violations(2)),
+        file("Cherry.groovy", violations(1)));
     assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
@@ -57,32 +57,32 @@ class AggregateSourceAnalyzerTest {
     // .
     // └── org
     //     └── example
-    //         ├── util
-    //         │   └── Foo.groovy (1 violation)
-    //         └── Bar.groovy (2 violations)
+    //         ├── Apple.groovy (1 violation)
+    //         └── util
+    //             └── Cherry.groovy (2 violations)
     var results1 = newResults(
         dir("org",
             dir("org/example",
+                file("org/example/Apple.groovy", violations(1)),
                 dir("org/example/util",
-                    file("org/example/util/Foo.groovy", violations(1))),
-                file("org/example/Bar.groovy", violations(2)))));
+                    file("org/example/util/Cherry.groovy", violations(2))))));
     var sa1 = newStubSourceAnalyzer(results1, "src/main/groovy");
     // .
     // └── org
     //     └── example
+    //         ├── AppleSpec.groovy (3 violations)
     //         ├── test
-    //         │   └── Baz.groovy (3 violations)
-    //         ├── util
-    //         │   └── FooSpec.groovy (4 violation)
-    //         └── BarSpec.groovy (5 violations)
+    //         │   └── Banana.groovy (4 violations)
+    //         └── util
+    //             └── CherrySpec.groovy (5 violations)
     var results2 = newResults(
         dir("org",
             dir("org/example",
+                file("org/example/AppleSpec.groovy", violations(3)),
                 dir("org/example/test",
-                    file("org/example/test/Baz.groovy", violations(3))),
+                    file("org/example/test/Banana.groovy", violations(4))),
                 dir("org/example/util",
-                    file("org/example/util/FooSpec.groovy", violations(4))),
-                file("org/example/BarSpec.groovy", violations(5)))));
+                    file("org/example/util/CherrySpec.groovy", violations(5))))));
     var sa2 = newStubSourceAnalyzer(results2, "src/test/groovy");
     var sut = new AggregateSourceAnalyzer(List.of(sa1, sa2));
 
@@ -93,23 +93,62 @@ class AggregateSourceAnalyzerTest {
     // .
     // └── org
     //     └── example
-    //         ├── util
-    //         │   ├── Foo.groovy (1 violation)
-    //         │   └── FooSpec.groovy (4 violation)
-    //         ├── Bar.groovy (2 violations)
+    //         ├── Apple.groovy (1 violation)
+    //         ├── AppleSpec.groovy (3 violations)
     //         ├── test
-    //         │   └── Baz.groovy (3 violations)
-    //         └── BarSpec.groovy (5 violations)
+    //         │   └── Banana.groovy (4 violations)
+    //         └── util
+    //             ├── Cherry.groovy (2 violations)
+    //             └── CherrySpec.groovy (5 violations)
     var expected = newResults(
         dir("org",
             dir("org/example",
-                dir("org/example/util",
-                    file("org/example/util/Foo.groovy", violations(1)),
-                    file("org/example/util/FooSpec.groovy", violations(4))),
-                file("org/example/Bar.groovy", violations(2)),
+                file("org/example/Apple.groovy", violations(1)),
+                file("org/example/AppleSpec.groovy", violations(3)),
                 dir("org/example/test",
-                    file("org/example/test/Baz.groovy", violations(3))),
-                file("org/example/BarSpec.groovy", violations(5)))));
+                    file("org/example/test/Banana.groovy", violations(4))),
+                dir("org/example/util",
+                    file("org/example/util/Cherry.groovy", violations(2)),
+                    file("org/example/util/CherrySpec.groovy", violations(5))))));
+    assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
+  }
+
+  @Test
+  void childrenAreSortedByName() {
+    // Arrange
+    // CodeNarc lists files in the order the file system returns them, which is not necessarily sorted.
+    // .
+    // ├── b
+    // │   ├── Cherry.groovy (1 violation)
+    // │   └── Apple.groovy (2 violations)
+    // └── a
+    //     └── Banana.groovy (3 violations)
+    var results = newResults(
+        dir("b",
+            file("b/Cherry.groovy", violations(1)),
+            file("b/Apple.groovy", violations(2))),
+        dir("a",
+            file("a/Banana.groovy", violations(3))));
+    var sa1 = newStubSourceAnalyzer(results, "src/main/groovy");
+    var sa2 = newStubSourceAnalyzer(newResults(), "src/test/groovy");
+    var sut = new AggregateSourceAnalyzer(List.of(sa1, sa2));
+
+    // Act
+    var actual = sut.analyze(DUMMY_RULE_SET);
+
+    // Assert
+    // .
+    // ├── a
+    // │   └── Banana.groovy (3 violations)
+    // └── b
+    //     ├── Apple.groovy (2 violations)
+    //     └── Cherry.groovy (1 violation)
+    var expected = newResults(
+        dir("a",
+            file("a/Banana.groovy", violations(3))),
+        dir("b",
+            file("b/Apple.groovy", violations(2)),
+            file("b/Cherry.groovy", violations(1))));
     assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
@@ -132,12 +171,12 @@ class AggregateSourceAnalyzerTest {
   void whenConflictingFilePathsThenKeepFirst() {
     // Arrange
     // .
-    // └── Foo.groovy (1 violation)
-    var result1 = newResults(file("Foo.groovy", violations(1)));
+    // └── Apple.groovy (1 violation)
+    var result1 = newResults(file("Apple.groovy", violations(1)));
     var sa1 = newStubSourceAnalyzer(result1, "src/main/groovy");
     // .
-    // └── Foo.groovy (2 violation)
-    var result2 = newResults(file("Foo.groovy", violations(2)));
+    // └── Apple.groovy (2 violations)
+    var result2 = newResults(file("Apple.groovy", violations(2)));
     var sa2 = newStubSourceAnalyzer(result2, "src/test/groovy");
     var sut = new AggregateSourceAnalyzer(List.of(sa1, sa2));
 
@@ -146,22 +185,22 @@ class AggregateSourceAnalyzerTest {
 
     // Assert
     // .
-    // └── Foo.groovy (1 violation)
-    var expected = newResults(file("Foo.groovy", violations(1)));
+    // └── Apple.groovy (1 violation)
+    var expected = newResults(file("Apple.groovy", violations(1)));
     assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
   @Test
-  void whenConflictingFilePathAndDirectoryPathThenKeepBoth() {
+  void whenConflictingFilePathAndDirectoryPathThenDirectoryComesFirst() {
     // Arrange
     // .
-    // └── foo (1 violation)
-    var result1 = newResults(file("foo", violations(1)));
+    // └── apple (1 violation)
+    var result1 = newResults(file("apple", violations(1)));
     var sa1 = newStubSourceAnalyzer(result1, "src/main/groovy");
     // .
-    // └── foo
-    //     └── bar (2 violation)
-    var result2 = newResults(dir("foo", file("foo/bar", violations(2))));
+    // └── apple
+    //     └── banana (2 violations)
+    var result2 = newResults(dir("apple", file("apple/banana", violations(2))));
     var sa2 = newStubSourceAnalyzer(result2, "src/test/groovy");
     var sut = new AggregateSourceAnalyzer(List.of(sa1, sa2));
 
@@ -170,12 +209,41 @@ class AggregateSourceAnalyzerTest {
 
     // Assert
     // .
-    // ├── foo (1 violation)
-    // └── foo
-    //     └── bar (2 violation)
+    // ├── apple
+    // │   └── banana (2 violations)
+    // └── apple (1 violation)
     var expected = newResults(
-        file("foo", violations(1)),
-        dir("foo", file("foo/bar", violations(2))));
+        dir("apple", file("apple/banana", violations(2))),
+        file("apple", violations(1)));
+    assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
+  }
+
+  @Test
+  void whenConflictingDirectoryPathAndFilePathThenDirectoryComesFirst() {
+    // Arrange
+    // .
+    // └── apple
+    //     └── banana (2 violations)
+    var result1 = newResults(dir("apple", file("apple/banana", violations(2))));
+    var sa1 = newStubSourceAnalyzer(result1, "src/main/groovy");
+    // .
+    // └── apple (1 violation)
+    var result2 = newResults(file("apple", violations(1)));
+    var sa2 = newStubSourceAnalyzer(result2, "src/test/groovy");
+    var sut = new AggregateSourceAnalyzer(List.of(sa1, sa2));
+
+    // Act
+    var actual = sut.analyze(DUMMY_RULE_SET);
+
+    // Assert
+    // the same as whenConflictingFilePathAndDirectoryPathThenDirectoryComesFirst regardless of the input order
+    // .
+    // ├── apple
+    // │   └── banana (2 violations)
+    // └── apple (1 violation)
+    var expected = newResults(
+        dir("apple", file("apple/banana", violations(2))),
+        file("apple", violations(1)));
     assertThat(actual).usingEquals(TestResults::equals).isEqualTo(expected);
   }
 
