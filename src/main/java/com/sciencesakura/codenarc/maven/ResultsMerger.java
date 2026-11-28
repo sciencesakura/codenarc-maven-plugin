@@ -3,6 +3,7 @@
 package com.sciencesakura.codenarc.maven;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import org.codenarc.results.DirectoryResults;
 import org.codenarc.results.Results;
@@ -13,6 +14,9 @@ import org.codenarc.results.Results;
  * @author sciencesakura
  */
 final class ResultsMerger {
+
+  private static final Comparator<Results> CHILD_ORDER = Comparator.comparing(ResultsMerger::nameOf)
+      .thenComparing(r -> !(r instanceof DirectoryResults));
 
   private ResultsMerger() {
   }
@@ -27,8 +31,25 @@ final class ResultsMerger {
     var root = new DirectoryResults("");
     mergeInternal(root, results);
     var merged = new DirectoryResults();
-    merged.addChild(root);
+    merged.addChild(sortByName(root));
     return merged;
+  }
+
+  private static Results sortByName(Results node) {
+    if (!(node instanceof DirectoryResults)) {
+      return node;
+    }
+    var sorted = new DirectoryResults(node.getPath());
+    node.getChildren().stream()
+        .sorted(CHILD_ORDER)
+        .map(ResultsMerger::sortByName)
+        .forEach(sorted::addChild);
+    return sorted;
+  }
+
+  private static String nameOf(Results node) {
+    var segments = splitPath(node.getPath());
+    return segments.isEmpty() ? "" : segments.get(segments.size() - 1);
   }
 
   private static void mergeInternal(DirectoryResults root, Iterable<? extends Results> results) {
